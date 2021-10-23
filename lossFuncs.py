@@ -8,7 +8,7 @@ import numpy as np
 ## y : predicted probability
 ##          Usually a float value between 0~1
 ## t : truth label
-##          A list composed with only 0 and 1
+##          A list composed with only 0 and 1 (one-hot encoding)
 ###################################################################################
 
 def check_length(y, t):
@@ -24,3 +24,11 @@ def mean_squared_error(y, t):
 def cross_entropy_error(y, t):
     delta = 1e-7
     return -np.sum(t * np.log(y + delta)) # Only the value which is placed in the same index of the truth labeled index in y can effect the whole value
+
+def mean_of_cross_entropy_error_in_batch(y, t):
+    if y.ndim == 1:
+        y = y.reshape(1, y.size)
+        t = t.reshape(1, t.size)
+            
+    batch_size = y.shape[0]
+    return -np.sum(t * np.log(y + 1e-7)) / batch_size
