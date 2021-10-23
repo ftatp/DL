@@ -2,12 +2,18 @@ import sys, os
 sys.path.append(os.pardir)
 
 import numpy as np
-import DP_net
 import matplotlib.pylab as plt
-import activation
+
+from dataset.mnist import load_mnist
+
+import Network
+import activationFuncs
 
 
-#from dataset.mnist import load_mnist
+(x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
 
-net = DP_net.Network("dataset/sample_weight.pkl")
-net.forward(np.array([1.0, 0.5]), activation.sigmoid, activation.identity)
+print(x_train.shape, t_train.shape)
+print(x_test.shape, t_test.shape)
+
+#net = Network.Network("dataset/sample_weight.pkl")
+#net.forward(np.array([1.0, 0.5]), activation.sigmoid, activation.identity)

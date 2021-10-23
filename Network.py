@@ -1,5 +1,5 @@
 import numpy as np
-import activation
+#import activationFuncs
 import pickle
 
 class Network():
