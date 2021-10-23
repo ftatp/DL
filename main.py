@@ -8,6 +8,8 @@ from dataset.mnist import load_mnist
 
 import Network
 import activationFuncs
+import lossFuncs
+import deriative
 
 
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
@@ -23,3 +25,11 @@ t_batch = t_train[batch_mask]
 
 #net = Network.Network("dataset/sample_weight.pkl")
 #net.forward(np.array([1.0, 0.5]), activation.sigmoid, activation.identity)
+
+
+def function_2(x):
+    return x[0]**2 + x[1]**2
+
+grad = deriative.numerical_gradient(function_2, np.array([3, 4]))
+print(grad)
+
