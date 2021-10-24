@@ -23,13 +23,13 @@ import deriative
 #x_batch = x_train[batch_mask]
 #t_batch = t_train[batch_mask]
 #
-#net = Network.Network("dataset/sample_weight.pkl")
-#net.forward(np.array([1.0, 0.5]), activation.sigmoid, activation.identity)
+net = Network.Network(activation_func=activationFuncs.sigmoid, output_func=activationFuncs.identity)
+net.forward(np.array([1.0, 0.5]))
 
 
 def function_2(x):
     return x[0]**2 + x[1]**2
 
-minVal = deriative.gradient_descent(function_2, np.array([3.0, 4.0]))
+minVal = deriative.gradient_descent(function_2, np.array([3.0, 4.0]), lr=0.1)
 print(minVal)
 
