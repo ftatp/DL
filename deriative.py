@@ -21,3 +21,12 @@ def numerical_gradient(func , x):
         x[i] = tmp_val
 
     return grad
+
+def gradient_descent(func, init_x, lr=0.01, step_num=100):
+    x = init_x
+
+    for i in range(step_num):
+        grad = numerical_gradient(func, x)
+        x -= lr * grad
+
+    return x
