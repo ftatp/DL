@@ -24,12 +24,23 @@ import deriative
 #t_batch = t_train[batch_mask]
 #
 net = Network.Network(activation_func=activationFuncs.sigmoid, output_func=activationFuncs.identity)
-net.forward(np.array([1.0, 0.5]))
+input_layer = np.array([1.0, 0.5])
+output_layer = net.forward(input_layer)
+print(output_layer)
 
+print("################################################")
 
-def function_2(x):
-    return x[0]**2 + x[1]**2
+np.argmax(output_layer)
 
-minVal = deriative.gradient_descent(function_2, np.array([3.0, 4.0]), lr=0.1)
-print(minVal)
+t = np.array([0, 1])
 
+loss = net.loss(input_layer, t)
+
+print(loss)
+
+#def function_2(x):
+#    return x[0]**2 + x[1]**2
+#
+#minVal = deriative.gradient_descent(function_2, np.array([3.0, 4.0]), lr=0.1)
+#print(minVal)
+#

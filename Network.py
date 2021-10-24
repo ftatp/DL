@@ -78,8 +78,8 @@ class Network():
         results = forward(input_layer, self.activation_func, self.output_func)
         return np.argmax(results)
 
-    def loss(self, x, t):
-        z = self.forward(self, x, activationFuncs.identity, activationFuncs.identity)
-        y = activationFuncs.softmax(x)
+    def loss(self, input_layer, t):
+        output_layer = self.forward(input_layer)
+        loss = self.loss_func(output_layer, t)
 
-        
+        return loss
