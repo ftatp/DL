@@ -23,20 +23,29 @@ import deriative
 #x_batch = x_train[batch_mask]
 #t_batch = t_train[batch_mask]
 #
-net = Network.Network(activation_func=activationFuncs.sigmoid, output_func=activationFuncs.identity)
+net = Network.Network(activation_func=activationFuncs.sigmoid, output_func=activationFuncs.softmax, loss_func=lossFuncs.cross_entropy_error)
 input_layer = np.array([1.0, 0.5])
-output_layer = net.forward(input_layer)
-print(output_layer)
+#output_layer = net.forward(input_layer)
+#print(output_layer)
 
 print("################################################")
 
-np.argmax(output_layer)
+#np.argmax(output_layer)
 
 t = np.array([0, 1])
 
-loss = net.loss(input_layer, t)
+#loss = net.loss(input_layer, t)
 
-print(loss)
+#print(loss)
+
+def f(W):
+    #print("Input layer : ", input_layer)
+    return net.loss(input_layer, t)
+
+W = net.network['hidden_layers']
+grad = deriative.numerical_gradient(f, W[0])
+
+print(grad)
 
 #def function_2(x):
 #    return x[0]**2 + x[1]**2

@@ -56,22 +56,22 @@ class Network():
         depth = self.depth
 
         for i in range(depth - 1):
-            print("Depth : ", i + 1)
+            #print("Depth : ", i + 1)
             output_layer = np.dot(input_layer, hidden_layers[i]) + bias[i]
-            print("result : \n", output_layer)
+            #print("result : \n", output_layer)
 
             output_layer = self.activation_func(output_layer)
-            print("After activation result : ", output_layer)
+            #print("After activation result : ", output_layer)
             input_layer = output_layer
-            print("------------------------------------------------------------")
+            #print("------------------------------------------------------------")
     
 
-        print("Depth : ", depth)
+        #print("Depth : ", depth)
         output_layer = np.dot(input_layer, hidden_layers[depth - 1]) + bias[depth - 1]
-        print("result : \n", output_layer)
+        #print("result : \n", output_layer)
         output_layer = self.output_func(output_layer)
-        print("After activation result : ", output_layer)
-        print("------------------------------------------------------------")
+        #print("After activation result : ", output_layer)
+        #print("------------------------------------------------------------")
         return output_layer
   
     def predict(self, input_layer):
