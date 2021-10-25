@@ -22,10 +22,6 @@ def mean_squared_error(y, t):
     return np.sum((y - t)**2) / len(y)
 
 def cross_entropy_error(y, t):
-    delta = 1e-7
-    return -np.sum(t * np.log(y + delta)) # Only the value which is placed in the same index of the truth labeled index in y can effect the whole value
-
-def mean_of_cross_entropy_error_in_batch(y, t):
     if y.ndim == 1:
         y = y.reshape(1, y.size)
         t = t.reshape(1, t.size)

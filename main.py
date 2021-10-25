@@ -6,50 +6,45 @@ import matplotlib.pylab as plt
 
 from dataset.mnist import load_mnist
 
-import Network
+import network
 import activationFuncs
 import lossFuncs
 import deriative
 
 
-#(x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
-#
+(x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
+
 #print(x_train.shape, t_train.shape) # (60000, 784) , (60000, 10) 784 = 28*28
 #print(x_test.shape, t_test.shape)   # (10000, 784) , (10000, 10)
-#
-#train_size = x_train.shape[0]
-#batch_size = 10
-#batch_mask = np.random.choice(train_size, batch_size)
-#x_batch = x_train[batch_mask]
-#t_batch = t_train[batch_mask]
-#
-net = Network.Network(activation_func=activationFuncs.sigmoid, output_func=activationFuncs.softmax, loss_func=lossFuncs.cross_entropy_error)
-input_layer = np.array([1.0, 0.5])
-#output_layer = net.forward(input_layer)
-#print(output_layer)
 
-print("################################################")
+train_size = x_train.shape[0]
+batch_size = 100
 
-#np.argmax(output_layer)
+net = network.Network(input_size=784, output_size=10, num_of_hidden_layers=1)
 
-t = np.array([0, 1])
+for i in range(net.depth):
+    print(net.network['weights'][i].shape)
+    print(net.network['bias'][i].shape)
 
-#loss = net.loss(input_layer, t)
+net.set_network_training_methods(activation_func=activationFuncs.sigmoid, output_func=activationFuncs.softmax, loss_func=lossFuncs.cross_entropy_error)
 
-#print(loss)
+iter_num = 10000
+train_loss_list = []
 
-def f(W):
-    #print("Input layer : ", input_layer)
-    return net.loss(input_layer, t)
+learning_rate = 0.1
+for i in range(iter_num):
+    batch_mask = np.random.choice(train_size)
+    x_batch = x_train[batch_mask]
+    t_batch = t_train[batch_mask]
 
-W = net.network['hidden_layers']
-grad = deriative.numerical_gradient(f, W[0])
+    grads = net.numerical_gradient(x_batch, t_batch)
 
-print(grad)
+    for i in range(net.depth):
+        net.network['weights'][i] -= learning_rate * grads['weights'][i]
+        net.network['bias'][i] -= learning_rate * grads['bias'][i]
 
-#def function_2(x):
-#    return x[0]**2 + x[1]**2
-#
-#minVal = deriative.gradient_descent(function_2, np.array([3.0, 4.0]), lr=0.1)
-#print(minVal)
-#
+    loss = net.loss(x_batch, t_batch)
+    train_loss_list.append(loss)
+
+    print("loss : ", loss)
+    
