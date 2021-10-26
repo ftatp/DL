@@ -10,22 +10,30 @@ def numerical_gradient(func, x):
 
     shape = x.shape
     #print(shape)
+    print("x : \n", x)
+    y = func(x)
+    print("y : \n", y)
     h = 1e-4
     grad = np.zeros(x.size)
-    x = x.reshape(x.size, 1)
-    
+    x = x.flatten()
     for i in range(x.size):
-        #print("-->", i)
+        print("x's element :", i)
         tmp_val = x[i]#.astype(np.float)
-        #print("x[i] : ", tmp_val)
-        #print(x.reshape(shape))
+        print("temp ele value : ", tmp_val)
         x[i] = tmp_val + h
+        print("temp ele value : ", x[i])
+        print("tmp x : \n", x.reshape(shape))
         fval2 = func(x.reshape(shape))
+        print("tmp y : \n", fval2)
         x[i] = tmp_val - h
+        print("temp ele value : ", x[i])
+        print("tmp x : \n", x.reshape(shape))
         fval1 = func(x.reshape(shape))
+        print("tmp y : \n", fval1)
 
         grad[i] = (fval2 - fval1) / (2*h)
         x[i] = tmp_val
+        print("\n")
 
     grad = grad.reshape(shape)
     return grad
