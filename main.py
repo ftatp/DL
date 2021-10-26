@@ -22,9 +22,9 @@ batch_size = 100
 
 net = network.Network(input_size=784, output_size=10, num_of_hidden_layers=1)
 
-for i in range(net.depth):
-    print(net.network['weights'][i].shape)
-    print(net.network['bias'][i].shape)
+# for i in range(net.depth):
+#     print(net.network['weights'][i].shape)
+#     print(net.network['bias'][i].shape)
 
 net.set_network_training_methods(activation_func=activationFuncs.sigmoid, output_func=activationFuncs.softmax, loss_func=lossFuncs.cross_entropy_error)
 

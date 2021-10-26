@@ -26,15 +26,23 @@ class Network():
         network['weights'] = []
         network['bias'] = []
 
+        print("Number of hidden layers : ", num_of_hidden_layers, "\n")
+        print("Hidden Layer 0 is input layer")
+        # print("Hidden Layer {0} is output layer".format(num_of_hidden_layers))
         next_input_size = input_size
         for i in range(num_of_hidden_layers):
+            print("Weight {0} (Hidden Layer {0} to {1}): ".format(i, i+1))
             next_output_size = 50#np.random.randint(100)
             weight = weight_init_std * np.random.randn(next_input_size, next_output_size)
+            print("\tshape ", weight.shape)
             network['weights'].append(weight)
             network['bias'].append(np.zeros(next_output_size))
             next_input_size = next_output_size
+        
+        print("Weight {0} (Hidden Layer {0} to {1}): ".format(num_of_hidden_layers, num_of_hidden_layers + 1))     
 
         weight = weight_init_std * np.random.randn(next_input_size, output_size)
+        print("\tshape ", weight.shape)
         network['weights'].append(weight)
         network['bias'].append(np.zeros(output_size))
 
@@ -90,7 +98,6 @@ class Network():
     def forward(self, input_layer): # input layer values in np.array
         hidden_layers = self.network['weights']
         bias = self.network['bias']
-
         depth = self.depth
 
         for i in range(depth - 1):
@@ -143,4 +150,5 @@ class Network():
             grads['bias'].append(grad)
 
         
+        ## 집에 돌아가서 샘플코드의 네크워크를 랜덤이 아니라 val로 설정한 다음 값 게산을 일일히 하나씩 비교해볼것
         return grads
