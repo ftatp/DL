@@ -49,22 +49,28 @@ class Network():
         self.depth = len(network['bias'])
         self.network = network
 
+        print("Network Building Complete!!\n\n")
+
 
     def set_network_by_values(self):
-        network['hidden_layers'].append(np.array([
+        network = {}
+        network['weights'] = []
+        network['bias'] = []
+
+        network['weights'].append(np.array([
             [0.1, 0.3, 0.5],
             [0.2, 0.4, 0.6]
         ])) # input 층의 퍼셉트론 수 * output 층의 퍼셉트론 수
         network['bias'].append(np.array([0.1, 0.2, 0.3])) # 다음 층의 퍼셉트론 수 만큼
 
-        network['hidden_layers'].append(np.array([
+        network['weights'].append(np.array([
             [0.1, 0.4],
             [0.2, 0.5],
             [0.3, 0.6]
         ]))
         network['bias'].append([0.1, 0.2])
 
-        network['hidden_layers'].append(np.array([
+        network['weights'].append(np.array([
             [0.1, 0.3],
             [0.2, 0.4]
         ]))
@@ -130,6 +136,8 @@ class Network():
 
 
     def loss(self, input_layer, t):
+        # The weight of the network must be changed before forwarding
+        #print(self.network['weights'])
         output_layer = self.forward(input_layer)
         loss = self.loss_func(output_layer, t)
 
@@ -142,9 +150,12 @@ class Network():
         grads['weights'] = []
         grads['bias'] = []
         for i in range(self.depth):
+            print("gradient loop : ", i)
+
             grad = deriative.numerical_gradient(loss_W, self.network['weights'][i])
             #print("grad weight {0} shape".format(i), grad.shape)
             grads['weights'].append(grad)
+            print(self.network['bias'][i].shape)
             grad = deriative.numerical_gradient(loss_W, self.network['bias'][i])
             #print("grad bias {0} shape".format(i), grad.shape)
             grads['bias'].append(grad)

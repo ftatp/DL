@@ -7,33 +7,33 @@ def numerical_diff(func, x):
 def numerical_gradient(func, x):
     # x : Can be a vector(numpy array). The length is is number of parameters of func
     #   Must be a vector of float!!! int type will not calculate properly
-
     shape = x.shape
-    #print(shape)
-    print("x : \n", x)
+    print(shape)
     y = func(x)
-    print("y : \n", y)
     h = 1e-4
     grad = np.zeros(x.size)
-    x = x.flatten()
+    x = x.ravel()
     for i in range(x.size):
-        print("x's element :", i)
+        #print("x : \n", x)
+        #print("y : \n", y)
+        
+        #print("x's element :", i)
         tmp_val = x[i]#.astype(np.float)
-        print("temp ele value : ", tmp_val)
+        #print("temp ord value : ", tmp_val)
         x[i] = tmp_val + h
-        print("temp ele value : ", x[i])
-        print("tmp x : \n", x.reshape(shape))
-        fval2 = func(x.reshape(shape))
-        print("tmp y : \n", fval2)
+        #print("temp ele value : ", x[i])
+        #print("tmp x : \n", x.reshape(shape)) 
+        fval2 = func(x.reshape(shape)) ## The parameters are just dumys. Has no meanings
+        #print("tmp y : \n", fval2)
         x[i] = tmp_val - h
-        print("temp ele value : ", x[i])
-        print("tmp x : \n", x.reshape(shape))
+        #print("temp ele value : ", x[i])
+        #print("tmp x : \n", x.reshape(shape))
         fval1 = func(x.reshape(shape))
-        print("tmp y : \n", fval1)
+        #print("tmp y : \n", fval1)
 
         grad[i] = (fval2 - fval1) / (2*h)
         x[i] = tmp_val
-        print("\n")
+        #print("\n")
 
     grad = grad.reshape(shape)
     return grad
