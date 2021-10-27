@@ -68,7 +68,7 @@ class Network():
             [0.2, 0.5],
             [0.3, 0.6]
         ]))
-        network['bias'].append([0.1, 0.2])
+        network['bias'].append(np.array([0.1, 0.2]))
 
         network['weights'].append(np.array([
             [0.1, 0.3],
@@ -134,7 +134,6 @@ class Network():
 ## Util functions
 ##############################################################################################################
 
-
     def loss(self, input_layer, t):
         # The weight of the network must be changed before forwarding
         #print(self.network['weights'])
@@ -155,6 +154,9 @@ class Network():
             grad = deriative.numerical_gradient(loss_W, self.network['weights'][i])
             #print("grad weight {0} shape".format(i), grad.shape)
             grads['weights'].append(grad)
+            
+            print("bias {0}: ".format(i), self.network['bias'][i])
+            print(type(self.network['bias'][i]))
             print(self.network['bias'][i].shape)
             grad = deriative.numerical_gradient(loss_W, self.network['bias'][i])
             #print("grad bias {0} shape".format(i), grad.shape)

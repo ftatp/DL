@@ -8,7 +8,7 @@ def numerical_gradient(func, x):
     # x : Can be a vector(numpy array). The length is is number of parameters of func
     #   Must be a vector of float!!! int type will not calculate properly
     shape = x.shape
-    print(shape)
+    #print(shape)
     y = func(x)
     h = 1e-4
     grad = np.zeros(x.size)
