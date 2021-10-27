@@ -165,3 +165,38 @@ class Network():
         
         ## 집에 돌아가서 샘플코드의 네크워크를 랜덤이 아니라 val로 설정한 다음 값 게산을 일일히 하나씩 비교해볼것
         return grads
+
+    def gradient(self, x, t):
+        W1, W2 = self.network['weights'][0], self.network['weights'][1] #self.params['W1'], self.params['W2']
+        b1, b2 = self.network['bias'][0], self.network['bias'][1] # self.params['b1'], self.params['b2']
+        
+
+        grads = {}
+        grads['weights'] = [0, 0]
+        grads['bias'] = [0, 0]
+        batch_num = x.shape[0]
+
+        # forward
+
+        #print("{0} {1} {2}".format(x.shape, W1.shape, b1.shape))
+
+        a1 = np.dot(x, W1) + b1
+        z1 = self.activation_func(a1)#sigmoid(a1)
+        a2 = np.dot(z1, W2) + b2
+        y = self.output_func(a2)#softmax(a2)
+
+        # backward
+        dy = (y - t) / batch_num
+        #print("z1.T : \n", z1.T)
+        #print(z1.T.shape)
+        #print(dy)
+        #print(dy.shape)
+        grads['weights'][1] = np.dot(z1.T, dy)
+        grads['bias'][1] = np.sum(dy, axis=0)
+
+        da1 = np.dot(dy, W2.T)
+        dz1 = activationFuncs.sigmoid_grad(a1) * da1
+        grads['weights'][0] = np.dot(x.T, dz1)
+        grads['bias'][0] = np.sum(dz1, axis=0)
+
+        return grads

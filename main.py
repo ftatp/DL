@@ -2,7 +2,7 @@ import sys, os
 sys.path.append(os.pardir)
 
 import numpy as np
-import matplotlib.pylab as plt
+import matplotlib.pyplot as plt
 
 from dataset.mnist import load_mnist
 
@@ -33,12 +33,12 @@ train_loss_list = []
 
 learning_rate = 0.1
 for i in range(iter_num):
-    batch_mask = np.random.choice(train_size)
+    batch_mask = np.random.choice(train_size, batch_size)
     x_batch = x_train[batch_mask]
     t_batch = t_train[batch_mask]
 
-    grads = net.numerical_gradient(x_batch, t_batch)
-
+    grads = net.gradient(x_batch, t_batch)
+    
     for i in range(net.depth):
         net.network['weights'][i] -= learning_rate * grads['weights'][i]
         net.network['bias'][i] -= learning_rate * grads['bias'][i]
@@ -47,4 +47,10 @@ for i in range(iter_num):
     train_loss_list.append(loss)
 
     print("loss : ", loss)
-    
+
+
+plt.plot(np.array(len(train_loss_list)), train_loss_list, label='loss')
+plt.xlabel("iter")
+plt.ylabel("loss")
+plt.ylim(0, 1.0)
+plt.show()
