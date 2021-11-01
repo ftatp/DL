@@ -49,8 +49,14 @@ for i in range(iter_num):
     print("loss : ", loss)
 
 
-plt.plot(np.array(len(train_loss_list)), train_loss_list, label='loss')
-plt.xlabel("iter")
+x = np.arange(len(train_loss_list))
+plt.plot(x, train_loss_list, label='loss')
+plt.xlabel("tries")
 plt.ylabel("loss")
-plt.ylim(0, 1.0)
+plt.ylim(0, 4.0)
+
+plt.legend(loc='lower right')
 plt.show()
+
+
+
