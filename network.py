@@ -32,7 +32,7 @@ class Network():
         next_input_size = input_size
         for i in range(num_of_hidden_layers):
             print("Weight {0} (Hidden Layer {0} to {1}): ".format(i, i+1))
-            next_output_size = 50#np.random.randint(100)
+            next_output_size = np.random.randint(100)
             weight = weight_init_std * np.random.randn(next_input_size, next_output_size)
             print("\tshape ", weight.shape)
             network['weights'].append(weight)
@@ -141,6 +141,16 @@ class Network():
         loss = self.loss_func(output_layer, t)
 
         return loss
+
+
+    def accuracy(self, input_layer, t):
+        output_layer = self.forward(input_layer)
+        output_layer = np.argmax(output_layer, axis=1)
+        t = np.argmax(t, axis=1)
+
+        accuracy = np.sum(output_layer == t) / float(input_layer.shape[0])
+        return accuracy
+
 
     def numerical_gradient(self, input_layer, t):
         loss_W = lambda W: self.loss(input_layer, t)

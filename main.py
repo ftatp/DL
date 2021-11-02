@@ -30,6 +30,10 @@ net.set_network_training_methods(activation_func=activationFuncs.sigmoid, output
 
 iter_num = 10000
 train_loss_list = []
+train_acc_list = []
+test_acc_list = []
+
+iter_per_epoch = max(train_size / batch_size, 1)
 
 learning_rate = 0.1
 for i in range(iter_num):
@@ -39,14 +43,19 @@ for i in range(iter_num):
 
     grads = net.gradient(x_batch, t_batch)
     
-    for i in range(net.depth):
-        net.network['weights'][i] -= learning_rate * grads['weights'][i]
-        net.network['bias'][i] -= learning_rate * grads['bias'][i]
+    for level in range(net.depth):
+        net.network['weights'][level] -= learning_rate * grads['weights'][level]
+        net.network['bias'][level] -= learning_rate * grads['bias'][level]
 
     loss = net.loss(x_batch, t_batch)
     train_loss_list.append(loss)
 
-    print("loss : ", loss)
+    #print("loss : ", loss)
+
+    if i % iter_per_epoch == 0:
+        test_acc = net.accuracy(x_test, t_test)
+        test_acc_list.append(test_acc)
+        print(test_acc)
 
 
 x = np.arange(len(train_loss_list))
@@ -58,5 +67,12 @@ plt.ylim(0, 4.0)
 plt.legend(loc='lower right')
 plt.show()
 
+x = np.arange(len(test_acc_list))
+plt.plot(x, test_acc_list, label='acc')
+plt.xlabel("tries")
+plt.ylabel("loss")
+plt.ylim(0, 1.0)
 
+plt.legend(loc='lower right')
+plt.show()
 
